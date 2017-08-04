@@ -130,7 +130,11 @@ out_noerr:
 	goto out;
 }
 
+
 static struct sk_buff *skb_set_peeked(struct sk_buff *skb)
+
+static int skb_set_peeked(struct sk_buff *skb)
+>>>>>>> 169f931... LINUX: 3.18.23 Kernel Update
 {
 	struct sk_buff *nskb;
 
@@ -143,7 +147,7 @@ static struct sk_buff *skb_set_peeked(struct sk_buff *skb)
 
 	nskb = skb_clone(skb, GFP_ATOMIC);
 	if (!nskb)
-		return ERR_PTR(-ENOMEM);;
+		return -ENOMEM;
 
 	skb->prev->next = nskb;
 	skb->next->prev = nskb;
@@ -157,6 +161,7 @@ done:
 	skb->peeked = 1;
 
 	return skb;
+	
 }
 
 /**
@@ -228,9 +233,8 @@ struct sk_buff *__skb_recv_datagram(struct sock *sk, unsigned int flags,
 					continue;
 				}
 
-				skb = skb_set_peeked(skb);
-				error = PTR_ERR(skb);
-				if (IS_ERR(skb))
+				error = skb_set_peeked(skb);
+				if (error)
 					goto unlock_err;
 
 				atomic_inc(&skb->users);
