@@ -39,6 +39,13 @@ config CFQ_GROUP_IOSCHED
 	---help---
 	  Enable group IO scheduling in CFQ.
 
+config IOSCHED_ZEN
+        tristate "Zen I/O scheduler"
+        default y
+        ---help---
+          FCFS, dispatches are back-inserted, deadlines ensure fairness.
+          Should work best with devices where there is no travel delay.
+
 choice
 	prompt "Default I/O scheduler"
 	default DEFAULT_CFQ
@@ -55,6 +62,22 @@ choice
 	config DEFAULT_NOOP
 		bool "No-op"
 
+<<<<<<< HEAD
+=======
+	config DEFAULT_ROW
+		bool "ROW" if IOSCHED_ROW=y
+		help
+		  The ROW I/O scheduler gives priority to READ requests
+		  over the WRITE requests when dispatching, without starving
+		  WRITE requests. Requests are kept in priority queues.
+		  Dispatching is done in a RR manner when the dispatch quantum
+		  for each queue is defined according to queue priority.
+		  Most suitable for mobile devices.
+
+	config DEFAULT_ZEN
+		bool "ZEN" if IOSCHED_ZEN=y
+
+>>>>>>> f761d32... block: add ZEN scheduler
 endchoice
 
 config DEFAULT_IOSCHED
@@ -62,7 +85,12 @@ config DEFAULT_IOSCHED
 	default "deadline" if DEFAULT_DEADLINE
 	default "cfq" if DEFAULT_CFQ
 	default "noop" if DEFAULT_NOOP
+<<<<<<< HEAD
 
+=======
+	default "row" if DEFAULT_ROW
+	default "zen" if DEFAULT_ZEN
+>>>>>>> f761d32... block: add ZEN scheduler
 endmenu
 
 endif
