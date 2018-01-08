@@ -24,4 +24,7 @@ obj-$(CONFIG_SEC_SIPC_MODEM_IF)	+= pmu-cp.o
 obj-$(CONFIG_ECT)		+= ect_parser.o
 
 obj-$(CONFIG_EXYNOS_HOTPLUG_GOVERNOR)	+= exynos-hotplug_governor.o
+
 obj-$(CONFIG_SEC_INCELL) += sec_incell.o
+
+obj-$(CONFIG_STATE_NOTIFIER)		+= state_notifier.o
