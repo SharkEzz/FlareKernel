@@ -25,7 +25,8 @@ config SEC_BAT_AUT
 
 config SAMSUNG_PRODUCT_SHIP
 	bool "set up for product shipping"
-	default n	  
+	default n
+
 endmenu
 
 endif
